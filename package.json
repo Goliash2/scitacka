@@ -1,8 +1,8 @@
 {
   "name": "scitacka",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Petr Hnyk",
+  "homepage": "https://scitacka.cz/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -55,5 +55,5 @@
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
   },
-  "description": "An Ionic project"
+  "description": "App for Counting Passengers in Public Transport"
 }
