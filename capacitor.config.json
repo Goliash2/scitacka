@@ -1,0 +1,8 @@
+{
+  "appId": "cz.scitacka",
+  "appName": "scitacka",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

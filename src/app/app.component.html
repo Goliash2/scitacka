@@ -19,13 +19,19 @@
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/survey">
             <ion-icon name="list" slot="start"></ion-icon>
-            <ion-label>Průzkumy</ion-label>
+            <ion-label>Průzkumy - přehled</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink="/survey/active">
+            <ion-icon name="bus" slot="start"></ion-icon>
+            <ion-label>662 Lovosice - Třebenice</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item lines="none" (click)="onLogout()" button="">
             <ion-icon name="exit" slot="start"></ion-icon>
-            <ion-label>Logout</ion-label>
+            <ion-label>Odhlásit</ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>
