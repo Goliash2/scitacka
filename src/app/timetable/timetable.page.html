@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Aktuální průzkum</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="stops">
+    <ion-grid>
+      <ion-row *ngIf="!timetable">
+        <ion-col class="ion-text-center">Zadané spojení nebylo nalezeno.</ion-col>
+      </ion-row>
+      <ion-row *ngIf="timetable">
+        <ion-col
+                class="ion-text-center">{{ timetable?.content.category }} {{ timetable?.content.number }} {{ timetable?.content.name }}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
+        <ion-col size="8" (click)="setCurrentStopKey(stop?.key)"><ion-text [ngClass]="(currentStopKey == stop?.key) ? 'active' : 'default'">{{ stop?.value.name}}</ion-text></ion-col>
+          <ion-col>{{ stop?.value.arrive}}</ion-col>
+          <ion-col>{{ stop?.value.departure}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="stops" *ngIf="timetable">
+    <ion-slides #slider (ionSlideDidChange)="refreshSlideKey()">
+      <ion-slide *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
+        <ion-grid>
+          <ion-row>
+            <ion-col
+                    class="ion-text-center">{{ stop.value.name }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-icon name="remove-circle" color="danger" size="large" (click)="boardedMinus()" ></ion-icon>
+                </ion-col>
+                <ion-col size="8">
+                  <ion-item>
+                    <ion-label>Nástup cestujících</ion-label>
+                    <ion-select [(ngModel)]="boarding">
+                      <ion-select-option selected="" value="0">0</ion-select-option>
+                      <ion-select-option [value]="index" *ngFor="let index of getOptions(500)">
+                        {{index}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-icon name="add-circle" color="success" size="large" (click)="boardedPlus()"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

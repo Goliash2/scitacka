@@ -9,6 +9,18 @@
 
 <ion-content>
   <div class="ion-padding">
-    Tady si vyberes, zda si vytvoris novy vlastni pruzkum nebo se pridas uz k existujicimu (sdilenym kodem nebo nascanovanim QR kodu).
+    <ion-text>Vytvořit nový projekt</ion-text>
+    <ion-button color="success" expand="block"><ion-icon name="add"></ion-icon>Vytvořit nový projekt</ion-button>
+    <ion-item-group>
+      <br><br><br><br>
+      <ion-item>
+        <ion-text>Připojit se k projektu pomocí kódu:</ion-text>
+        <ion-label position="floating">Kód projektu</ion-label>
+        <ion-input type="text" autocomplete="" autocorrect=""></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <ion-button color="primary" expand="block"><ion-icon name="login"></ion-icon>Připojit se kódem</ion-button>
+    <ion-text>nebo</ion-text>
+    <ion-button color="primary" expand="block"><ion-icon name="qr-code"></ion-icon>Scanovat QR kód</ion-button>
   </div>
 </ion-content>

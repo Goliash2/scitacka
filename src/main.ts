@@ -8,5 +8,7 @@ if (environment.production) {
   enableProdMode();
 }
 
+// TODO: adjust CORS in proxy.conf.ts before release
+
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
