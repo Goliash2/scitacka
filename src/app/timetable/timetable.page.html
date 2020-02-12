@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
+    <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Aktuální průzkum</ion-title>
@@ -19,13 +19,22 @@
         </ion-col>
       </ion-row>
       <ion-row *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
-        <ion-col size="8" (click)="setCurrentStopKey(stop?.key)"><ion-text [ngClass]="(currentStopKey == stop?.key) ? 'active' : 'default'">{{ stop?.value.name}}</ion-text></ion-col>
-          <ion-col>{{ stop?.value.arrive}}</ion-col>
-          <ion-col>{{ stop?.value.departure}}</ion-col>
+        <ion-col size="8" (click)="setCurrentStopKey(stop?.key)"><ion-text class="stopClass" [ngClass]="(currentStopKey == stop?.key) ? 'active' : 'default'">{{ stop?.value.name}}</ion-text></ion-col>
+          <ion-col size="2">{{ stop?.value.arrive}}</ion-col>
+          <ion-col size="2">{{ stop?.value.departure}}</ion-col>
       </ion-row>
     </ion-grid>
   </div>
-  <div class="stops" *ngIf="timetable">
+  <div class="stats" *ngIf="timetable">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          Aktuální počet cestujících: {{ getPassengers() }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="controls" *ngIf="timetable">
     <ion-slides #slider (ionSlideDidChange)="refreshSlideKey()">
       <ion-slide *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
         <ion-grid>
@@ -38,12 +47,14 @@
             <ion-col>
               <ion-row>
                 <ion-col size="2">
-                  <ion-icon name="remove-circle" color="danger" size="large" (click)="boardedMinus()" ></ion-icon>
+                  <ion-fab-button (click)="boardedMinus()" color="danger" size="small" [disabled]="boarding[stop.key]<=0">
+                    <ion-icon name="remove"></ion-icon>
+                  </ion-fab-button>
                 </ion-col>
                 <ion-col size="8">
                   <ion-item>
                     <ion-label>Nástup cestujících</ion-label>
-                    <ion-select [(ngModel)]="boarding">
+                    <ion-select [(ngModel)]="boarding[stop.key]">
                       <ion-select-option selected="" value="0">0</ion-select-option>
                       <ion-select-option [value]="index" *ngFor="let index of getOptions(500)">
                         {{index}}</ion-select-option>
@@ -51,7 +62,31 @@
                   </ion-item>
                 </ion-col>
                 <ion-col size="2">
-                  <ion-icon name="add-circle" color="success" size="large" (click)="boardedPlus()"></ion-icon>
+                  <ion-fab-button (click)="boardedPlus()" color="success" size="small">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-fab-button>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="2">
+                  <ion-fab-button (click)="alightMinus()" color="danger" size="small" [disabled]="alight[stop.key]<=0">
+                    <ion-icon name="remove"></ion-icon>
+                  </ion-fab-button>
+                </ion-col>
+                <ion-col size="8">
+                  <ion-item>
+                    <ion-label>Výstup cestujících</ion-label>
+                    <ion-select [(ngModel)]="alight[stop.key]">
+                      <ion-select-option selected="" value="0">0</ion-select-option>
+                      <ion-select-option [value]="index" *ngFor="let index of getOptions(getPassengers()+alight[stop.key])">
+                        {{index}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-fab-button (click)="alightPlus()" color="success" size="small" [disabled]="getPassengers()<=0">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-fab-button>
                 </ion-col>
               </ion-row>
               <ion-row>

@@ -3,6 +3,18 @@
   max-height: 49%;
   overflow-y: scroll;
 }
+.stats {
+  height: 8%;
+  max-height: 8%;
+  overflow-y: scroll;
+  background-color: #0091FF;
+  color: white;
+}
+.controls {
+  height: 42%;
+  max-height: 42%;
+  overflow-y: scroll;
+}
 .active {
   color: #0091FF;
 }

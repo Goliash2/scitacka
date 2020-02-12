@@ -11,17 +11,24 @@ import {IonSlides} from '@ionic/angular';
 export class TimetablePage implements OnInit, OnDestroy {
   timetable: object;
   currentStopKey: number;
-  boarding: number;
+  boarding: number[];
+  alight: number[];
   private timetableSub: Subscription;
   // private passengersCurrentNumber: number[];
   // private passengersBoarded: number[];
   // private passengersAlight: number[];
   @ViewChild('slider', { read: IonSlides, static: false }) slider: IonSlides;
   private boardedPlus() {
-    // this.timetable.content.stops[this.currentStopKey].passengersBoarded++;
+    this.boarding[this.currentStopKey]++;
   }
   private boardedMinus() {
-    // this.timetable.content.stops[this.currentStopKey].passengersBoarded--;
+    this.boarding[this.currentStopKey]--;
+  }
+  private alightPlus() {
+    this.alight[this.currentStopKey]++;
+  }
+  private alightMinus() {
+    this.alight[this.currentStopKey]--;
   }
 
   constructor(
@@ -30,9 +37,10 @@ export class TimetablePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentStopKey = 0;
+    this.boarding = this.getZeros(50);
+    this.alight = this.getZeros(50);
     this.timetableSub = this.timetableService.getTimetable().subscribe(timetable => {
       this.timetable = timetable;
-      console.log(timetable);
     });
   }
 
@@ -42,19 +50,21 @@ export class TimetablePage implements OnInit, OnDestroy {
     return Array.from({length: num}, (v, k) => k + 1);
   }
 
+  getZeros(num: number) {
+    return Array.from({length: num}, () => 0);
+  }
+
+  getPassengers() {
+    return this.boarding.reduce((acc, cur) => acc + cur, 0) - this.alight.reduce((acc, cur) => acc + cur, 0);
+  }
+
   refreshSlideKey() {
     this.slider.getActiveIndex().then(slide => {
       this.currentStopKey = slide;
-      console.log(slide);
     });
   }
 
   setCurrentStopKey(key) {
-    console.log(key);
-    // this.boarding[key] = 0;
-    // if (!this.timetable.content.stops[key].passengersBoarded) {
-    //   this.timetable.content.stops[key].passengersBoarded = 0;
-    // }
     if (this.slider) {
       this.slider.slideTo(key).then(() => {
         this.currentStopKey = key;
