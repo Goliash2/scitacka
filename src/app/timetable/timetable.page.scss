@@ -18,3 +18,7 @@
 .active {
   color: #0091FF;
 }
+.time-nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+}

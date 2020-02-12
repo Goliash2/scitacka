@@ -3,24 +3,43 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Průzkumy</ion-title>
+    <ion-title>Moje průzkumy</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    <ion-text>Vytvořit nový projekt</ion-text>
-    <ion-button color="success" expand="block"><ion-icon name="add"></ion-icon>Vytvořit nový projekt</ion-button>
-    <ion-item-group>
-      <br><br><br><br>
-      <ion-item>
-        <ion-text>Připojit se k projektu pomocí kódu:</ion-text>
-        <ion-label position="floating">Kód projektu</ion-label>
-        <ion-input type="text" autocomplete="" autocorrect=""></ion-input>
+    <ion-text>Vyber průzkum:</ion-text>
+    <ion-item>
+      <ion-select class="select-full-width" #surveySelect>
+        <ion-select-option value="0" class="select-full-width">4-O Lovosice AN - Čížkovice</ion-select-option>
+        <ion-select-option selected="" value="1" class="select-full-width">X-1 Velké Karlovice - Vsetín</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <div class="ion-padding">
+    <ion-text>Vyber směnu:</ion-text>
+    <ion-list class="ion-padding-top" *ngIf="surveySelect.value==1">
+      <ion-item detail routerLink="/timetable">
+        Velké Karlovice 22:12 - Vsetín 22:28
       </ion-item>
-    </ion-item-group>
-    <ion-button color="primary" expand="block"><ion-icon name="login"></ion-icon>Připojit se kódem</ion-button>
-    <ion-text>nebo</ion-text>
-    <ion-button color="primary" expand="block"><ion-icon name="qr-code"></ion-icon>Scanovat QR kód</ion-button>
+    </ion-list>
+    <ion-list class="ion-padding-top" *ngIf="surveySelect.value==0">
+      <ion-item detail disabled="">
+        Čížkovice 14:33 - Lovosice před ŽST 14:44
+      </ion-item>
+      <ion-item detail disabled="">
+        Lovosice AN 15:35 - Libčeves 16:10
+      </ion-item>
+      <ion-item detail disabled="">
+        Libčeves 16:44 - Lovosice AN 17:19
+      </ion-item>
+      <ion-item detail disabled="">
+        Lovosice AN 17:35 - Libčeves 18:10
+      </ion-item>
+      <ion-item detail disabled="">
+        Libčeves 18:44 - Lovosice AN 19:19
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>

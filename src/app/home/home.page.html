@@ -3,14 +3,41 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Vítej ve Sčítačce
-    </ion-title>
+    <ion-title>Průzkumy</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    Tady budou nejake zakladni informace a prehledy
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div class="ion-padding new-survey">
+      <ion-item>
+        <ion-text>Připojit se k průzkumu:</ion-text>
+        <ion-label position="floating">Kód průzkumu</ion-label>
+        <ion-input type="text" autocomplete="" autocorrect=""></ion-input>
+      </ion-item>
+    <ion-button color="primary" expand="block"><ion-icon name="login"></ion-icon>Připojit se kódem</ion-button>
+  </div>
+  <div class="info-bar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          Moje průzkumy:
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="my-surveys">
+    <ion-list>
+      <ion-item detail disabled="">
+        4-O Lovosice AN - Čížkovice
+      </ion-item>
+      <ion-item detail routerLink="/survey">
+        X-1 Velké Karlovice - Vsetín
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>

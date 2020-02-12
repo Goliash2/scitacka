@@ -20,8 +20,8 @@
       </ion-row>
       <ion-row *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
         <ion-col size="8" (click)="setCurrentStopKey(stop?.key)"><ion-text class="stopClass" [ngClass]="(currentStopKey == stop?.key) ? 'active' : 'default'">{{ stop?.value.name}}</ion-text></ion-col>
-          <ion-col size="2">{{ stop?.value.arrive}}</ion-col>
-          <ion-col size="2">{{ stop?.value.departure}}</ion-col>
+          <ion-col class="time-nowrap" size="2">{{ stop?.value.arrive}}</ion-col>
+          <ion-col class="time-nowrap" size="2">{{ stop?.value.departure}}</ion-col>
       </ion-row>
     </ion-grid>
   </div>
