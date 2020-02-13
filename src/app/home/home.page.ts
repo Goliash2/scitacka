@@ -10,6 +10,7 @@ import {ZXingScannerComponent} from '@zxing/ngx-scanner';
 export class HomePage {
 
   scannerActive = false;
+  joinCode: string;
 
   @ViewChild('scanner', { static: false })
   scanner: ZXingScannerComponent;
@@ -24,6 +25,7 @@ export class HomePage {
 
   scanSuccessHandler($event) {
     console.log($event);
+    this.joinCode = $event;
     this.startScanner();
   }
 
