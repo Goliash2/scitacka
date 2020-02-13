@@ -9,10 +9,12 @@
 
 <ion-content>
   <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="camera"></ion-icon>
+    <ion-fab-button (click)="startScanner()" [color]="!scannerActive ? 'primary' : 'danger'">
+      <ion-icon name="camera" *ngIf="!scannerActive"></ion-icon>
+      <ion-icon name="close" *ngIf="scannerActive"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <zxing-scanner *ngIf="scannerActive"></zxing-scanner>
   <div class="ion-padding new-survey">
       <ion-item>
         <ion-text>Připojit se k průzkumu:</ion-text>
