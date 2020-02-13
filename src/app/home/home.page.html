@@ -14,7 +14,7 @@
       <ion-icon name="close" *ngIf="scannerActive"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <zxing-scanner *ngIf="scannerActive"></zxing-scanner>
+  <zxing-scanner *ngIf="scannerActive" [enable]="scannerActive" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
   <div class="ion-padding new-survey">
       <ion-item>
         <ion-text>Připojit se k průzkumu:</ion-text>

@@ -22,6 +22,11 @@ export class HomePage {
     this.scanner.device = this.getBackCamera();
   }
 
+  scanSuccessHandler($event) {
+    console.log($event);
+    this.startScanner();
+  }
+
   /**
    * Returns the back camera for ya.
    */
