@@ -13,6 +13,7 @@ export class TimetablePage implements OnInit, OnDestroy {
   currentStopKey: number;
   boarding: number[];
   alight: number[];
+  isLoading = false;
   private timetableSub: Subscription;
   // private passengersCurrentNumber: number[];
   // private passengersBoarded: number[];
@@ -39,8 +40,10 @@ export class TimetablePage implements OnInit, OnDestroy {
     this.currentStopKey = 0;
     this.boarding = this.getZeros(50);
     this.alight = this.getZeros(50);
+    this.isLoading = true;
     this.timetableSub = this.timetableService.getTimetable().subscribe(timetable => {
       this.timetable = timetable;
+      this.isLoading = false;
     });
   }
 

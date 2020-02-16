@@ -10,10 +10,15 @@
 <ion-content>
   <div class="stops">
     <ion-grid>
-      <ion-row *ngIf="!timetable">
+      <ion-row *ngIf="isLoading">
+        <ion-col class="ion-text-center">
+          <ion-spinner></ion-spinner>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!timetable && !isLoading">
         <ion-col class="ion-text-center">Zadané spojení nebylo nalezeno.</ion-col>
       </ion-row>
-      <ion-row *ngIf="timetable">
+      <ion-row *ngIf="timetable && !isLoading">
         <ion-col
                 class="ion-text-center">{{ timetable?.content.category }} {{ timetable?.content.number }} {{ timetable?.content.name }}
         </ion-col>

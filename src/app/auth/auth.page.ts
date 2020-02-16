@@ -18,9 +18,9 @@ export class AuthPage implements OnInit {
   ngOnInit() {
   }
 
-  onLogin() {
+  onLogin(email) {
     this.isLoading = true;
-    this.authService.login();
+    this.authService.login(email);
     this.loadingController
         .create({keyboardClose: true, message: 'Logging in...'})
         .then(loadingEl => {
@@ -46,7 +46,7 @@ export class AuthPage implements OnInit {
           // send request to signup servers
       }
 
-      this.onLogin();
+      this.onLogin(email);
   }
 
     onSwitchAuthMode() {

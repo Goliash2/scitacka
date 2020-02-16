@@ -1,16 +1,22 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ViewChild } from '@angular/core';
 import {ZXingScannerComponent} from '@zxing/ngx-scanner';
+import {UserService} from '../user.service';
+import {User} from '../user.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
 
   scannerActive = false;
   joinCode: string;
+  user: User;
+  userStatus = false;
+  userSub: Subscription;
 
   @ViewChild('scanner', { static: false })
   scanner: ZXingScannerComponent;
@@ -40,6 +46,22 @@ export class HomePage {
     this.scannerActive = !this.scannerActive;
   }
 
-  constructor() {}
+  constructor( private userService: UserService) {}
 
+  ngOnInit(): void {
+    this.userSub = this.userService.getUser().subscribe(user => {
+      if (user === 'Unknown user') {
+        console.log('User not found');
+      } else {
+        this.user = user;
+        this.userStatus = true;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+  }
 }
