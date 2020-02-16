@@ -27,15 +27,25 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          Moje průzkumy:
+          Moje směny:
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
   <div class="my-surveys">
-    <ion-list>
-      <ion-item detail disabled="">
-        4-O Lovosice AN - Čížkovice
+    <ion-list *ngIf="isLoading">
+      <ion-item>
+        <ion-spinner></ion-spinner>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!userStatus && !isLoading">
+      <ion-item>
+        Nenašli jsme k vám přiřazené žádné směny.
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="userStatus && !isLoading">
+      <ion-item *ngFor="let smena of user.smeny">
+        {{ smena.date }}: {{ smena.name }}
       </ion-item>
       <ion-item detail routerLink="/survey">
         X-1 Velké Karlovice - Vsetín

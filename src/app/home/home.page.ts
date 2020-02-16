@@ -17,6 +17,7 @@ export class HomePage implements OnInit, OnDestroy {
   user: User;
   userStatus = false;
   userSub: Subscription;
+  isLoading = false;
 
   @ViewChild('scanner', { static: false })
   scanner: ZXingScannerComponent;
@@ -49,12 +50,16 @@ export class HomePage implements OnInit, OnDestroy {
   constructor( private userService: UserService) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userSub = this.userService.getUser().subscribe(user => {
       if (user === 'Unknown user') {
         console.log('User not found');
+        this.isLoading = false;
       } else {
         this.user = user;
+        console.log(user);
         this.userStatus = true;
+        this.isLoading = false;
       }
     });
   }

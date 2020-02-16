@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="ion-padding">
-    <ion-text>Vyber průzkum:</ion-text>
+    <ion-text>Vyber směnu:</ion-text>
     <ion-item>
       <ion-select class="select-full-width" #surveySelect>
         <ion-select-option value="0" class="select-full-width">4-O Lovosice AN - Čížkovice</ion-select-option>
@@ -18,7 +18,7 @@
     </ion-item>
   </div>
   <div class="ion-padding">
-    <ion-text>Vyber směnu:</ion-text>
+    <ion-text>Rozpis směny:</ion-text>
     <ion-list class="ion-padding-top" *ngIf="surveySelect.value==1">
       <ion-item detail routerLink="/timetable">
         Velké Karlovice 22:12 - Vsetín 22:28
