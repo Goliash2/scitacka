@@ -3,42 +3,40 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Moje průzkumy</ion-title>
+    <ion-title>Moje směny</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    <ion-text>Vyber směnu:</ion-text>
+    <ion-text>Vyber jinou směnu:</ion-text>
     <ion-item>
-      <ion-select class="select-full-width" #surveySelect>
-        <ion-select-option value="0" class="select-full-width">4-O Lovosice AN - Čížkovice</ion-select-option>
-        <ion-select-option selected="" value="1" class="select-full-width">X-1 Velké Karlovice - Vsetín</ion-select-option>
+      <ion-select *ngIf="!isLoading && user" [value]="shiftId" (ionChange)="onChangeShift($event)">
+        <ion-select-option *ngFor="let localShift of user.smeny" [value]="localShift.idSmena" class="select-full-width">{{ localShift.name }}: {{ localShift.date }} {{ localShift.from.substr(0,5) }} {{ localShift.origin }}</ion-select-option>
       </ion-select>
     </ion-item>
   </div>
-  <div class="ion-padding">
-    <ion-text>Rozpis směny:</ion-text>
-    <ion-list class="ion-padding-top" *ngIf="surveySelect.value==1">
-      <ion-item detail routerLink="/timetable">
-        Velké Karlovice 22:12 - Vsetín 22:28
+  <div class="info-bar">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="!isLoading && shift">
+          Rozpis směny {{ shift?.name }} (typ: {{ shift?.type }})
+        </ion-col>
+        <ion-col *ngIf="isLoading">
+          <ion-spinner></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div>
+    <ion-list *ngIf="isLoading">
+      <ion-item>
+        <ion-spinner></ion-spinner>
       </ion-item>
     </ion-list>
-    <ion-list class="ion-padding-top" *ngIf="surveySelect.value==0">
-      <ion-item detail disabled="">
-        Čížkovice 14:33 - Lovosice před ŽST 14:44
-      </ion-item>
-      <ion-item detail disabled="">
-        Lovosice AN 15:35 - Libčeves 16:10
-      </ion-item>
-      <ion-item detail disabled="">
-        Libčeves 16:44 - Lovosice AN 17:19
-      </ion-item>
-      <ion-item detail disabled="">
-        Lovosice AN 17:35 - Libčeves 18:10
-      </ion-item>
-      <ion-item detail disabled="">
-        Libčeves 18:44 - Lovosice AN 19:19
+    <ion-list *ngIf="!isLoading && shift">
+      <ion-item detail *ngFor="let spoj of shift?.spoje">
+        {{ spoj.from.substr(0, 5) }} {{ spoj.origin }} -> {{ spoj.destination }}
       </ion-item>
     </ion-list>
   </div>

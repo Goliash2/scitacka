@@ -4,7 +4,7 @@ import {AuthService} from './auth/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {User} from './user.model';
-import {Shift} from './shift.model';
+import {UserShifts} from './user-shift.model';
 
 interface UserData {
   error: string;
@@ -23,7 +23,7 @@ interface UserData {
   providedIn: 'root'
 })
 export class UserService {
-  innerSmeny: Shift[] = [];
+  innerSmeny: UserShifts[] = [];
   private userEmail = this.authService.userId;
   private innerUser = new BehaviorSubject<User[]>([]);
 
@@ -42,8 +42,9 @@ export class UserService {
               if (userData.error) {
                 return 'Unknown user';
               } else {
+                this.innerSmeny = [];
                 for (const smena of userData.smeny) {
-                  this.innerSmeny.push(new Shift(
+                  this.innerSmeny.push(new UserShifts(
                       smena.id,
                       smena.id_smena,
                       smena.id_scitac,
@@ -51,7 +52,9 @@ export class UserService {
                       smena.comment,
                       smena.id_pruzkum,
                       smena.name,
-                      smena.type
+                      smena.type,
+                      smena.origin,
+                      smena.from
                       )
                   );
                 }

@@ -44,11 +44,8 @@
       </ion-item>
     </ion-list>
     <ion-list *ngIf="userStatus && !isLoading">
-      <ion-item *ngFor="let smena of user.smeny">
-        {{ smena.date }}: {{ smena.name }}
-      </ion-item>
-      <ion-item detail routerLink="/survey">
-        X-1 Velké Karlovice - Vsetín
+      <ion-item *ngFor="let smena of user.smeny" detail="" [routerLink]="['/survey', smena.idSmena]">
+        <small>{{ smena.date }} {{ smena.from.substr(0,5) }}</small><span class="ion-padding-start"><strong>{{ smena.name }}</strong>, <small>výchozí:</small> {{ smena.origin }}</span>
       </ion-item>
     </ion-list>
   </div>

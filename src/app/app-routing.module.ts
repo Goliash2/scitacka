@@ -14,7 +14,7 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'survey',
+    path: 'survey/:id',
     loadChildren: () => import('./survey/survey.module').then( m => m.SurveyPageModule),
     canLoad: [AuthGuard]
   },

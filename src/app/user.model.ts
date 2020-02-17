@@ -1,4 +1,4 @@
-import { Shift } from './shift.model';
+import { UserShifts } from './user-shift.model';
 
 export class User {
     constructor(
@@ -10,6 +10,6 @@ export class User {
         public email: number,
         public phone: string,
         public comment: string,
-        public smeny: Shift[]
+        public smeny: UserShifts[]
     ) {}
 }
