@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button [defaultHref]="'/survey/' + shiftId"></ion-back-button>
     </ion-buttons>
     <ion-title>Aktuální průzkum</ion-title>
   </ion-toolbar>
@@ -15,22 +15,22 @@
           <ion-spinner></ion-spinner>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="!timetable && !isLoading">
+      <ion-row *ngIf="!timetableBus && !timetableTrain && !isLoading">
         <ion-col class="ion-text-center">Zadané spojení nebylo nalezeno.</ion-col>
       </ion-row>
-      <ion-row *ngIf="timetable && !isLoading">
+      <ion-row *ngIf="(timetableBus || timetableTrain) && !isLoading">
         <ion-col
-                class="ion-text-center">{{ timetable?.content.category }} {{ timetable?.content.number }} {{ timetable?.content.name }}
+                class="ion-text-center">{{ timetableTrain ? timetableTrain.spoj.company : timetableBus.linka.cislo + ' ' + timetableBus.linka.nazev}}
         </ion-col>
       </ion-row>
-      <ion-row *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
-        <ion-col size="8" (click)="setCurrentStopKey(stop?.key)"><ion-text class="stopClass" [ngClass]="(currentStopKey == stop?.key) ? 'active' : 'default'">{{ stop?.value.name}}</ion-text></ion-col>
-          <ion-col class="time-nowrap" size="2">{{ stop?.value.arrive}}</ion-col>
-          <ion-col class="time-nowrap" size="2">{{ stop?.value.departure}}</ion-col>
+      <ion-row *ngFor="let stop of (timetableTrain ? timetableTrain?.zastavky : timetableBus?.zastavky) | keyvalue: noSort">
+        <ion-col size="8" (click)="setCurrentStopKey(stop?.key)"><ion-text class="stopClass" [ngClass]="(currentStopKey == stop?.key) ? 'active' : 'default'">{{ timetableTrain ? stop?.value.PrimaryLocationName : stop?.value.nazev }}</ion-text></ion-col>
+        <ion-col class="time-nowrap" size="2">{{ timetableTrain ? stop?.value.TTArrival?.substr(0,5) : stop?.value.prijezd?.substr(0,5) }}</ion-col>
+        <ion-col class="time-nowrap" size="2">{{ timetableTrain ? stop?.value.TTDeparture?.substr(0,5) : stop?.value.odjezd?.substr(0,5) }}</ion-col>
       </ion-row>
     </ion-grid>
   </div>
-  <div class="stats" *ngIf="timetable">
+  <div class="stats" *ngIf="timetableBus || timetableTrain">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -39,13 +39,13 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div class="controls" *ngIf="timetable">
+  <div class="controls" *ngIf="timetableBus || timetableTrain">
     <ion-slides #slider (ionSlideDidChange)="refreshSlideKey()">
-      <ion-slide *ngFor="let stop of timetable?.content.stops | keyvalue: noSort">
+      <ion-slide *ngFor="let stop of (timetableTrain ? timetableTrain?.zastavky : timetableBus?.zastavky) | keyvalue: noSort">
         <ion-grid>
           <ion-row>
             <ion-col
-                    class="ion-text-center">{{ stop.value.name }}
+                    class="ion-text-center">{{ timetableTrain ? stop.value.PrimaryLocationName : stop.value.nazev }}
             </ion-col>
           </ion-row>
           <ion-row>

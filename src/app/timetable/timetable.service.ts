@@ -5,6 +5,17 @@ import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Timetable} from './timetable.model';
 
+interface BusData {
+    linka: any;
+    dopravce: any;
+    spoj: any;
+    zastavky: any[];
+}
+interface TrainData {
+    spoj: any;
+    zastavky: any[];
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -24,6 +35,26 @@ export class TimetableService {
             .pipe(
                 map(timetableData => {
                     return timetableData;
+                })
+            );
+    }
+
+    getBus(linka, spoj, rok) {
+        return this.httpClient
+            .get<BusData>(`https://vyvoj.fd.cvut.cz/scitacka/api/getbus.php?linka=` + linka + `&spoj=` + spoj + `&rok=` + rok + ``)
+            .pipe(
+                map(busData => {
+                    return busData;
+                })
+            );
+    }
+
+    getTrain(spoj, rok) {
+        return this.httpClient
+            .get<TrainData>(`https://vyvoj.fd.cvut.cz/scitacka/api/gettrain.php?spoj=` + spoj + `&rok=` + rok + ``)
+            .pipe(
+                map(trainData => {
+                    return trainData;
                 })
             );
     }

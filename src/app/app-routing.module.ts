@@ -19,7 +19,7 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'timetable',
+    path: 'timetable/:id/:spoj',
     loadChildren: () => import('./timetable/timetable.module').then( m => m.TimetablePageModule)
   }
 ];

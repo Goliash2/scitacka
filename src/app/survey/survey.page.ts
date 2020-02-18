@@ -15,7 +15,7 @@ import {Location} from '@angular/common';
 })
 export class SurveyPage implements OnInit, OnDestroy {
   isLoading = false;
-  shiftId: string;
+  shiftId: number;
   shift: Shift;
   user: User;
   shiftSub: Subscription;
@@ -37,7 +37,7 @@ export class SurveyPage implements OnInit, OnDestroy {
         this.navCtrl.navigateBack('home');
         return;
       }
-      this.shiftId = paramMap.get('id');
+      this.shiftId = Number(paramMap.get('id'));
       this.getShift();
     });
     this.isLoading = true;
@@ -50,6 +50,17 @@ export class SurveyPage implements OnInit, OnDestroy {
         console.log(user);
         this.isLoading = false;
       }
+    });
+  }
+
+  ionViewDidEnter() {
+    this.route.paramMap.subscribe(paramMap => {
+      if (!paramMap.has('id')) {
+        this.navCtrl.navigateBack('home');
+        return;
+      }
+      this.shiftId = Number(paramMap.get('id'));
+      this.getShift();
     });
   }
 
