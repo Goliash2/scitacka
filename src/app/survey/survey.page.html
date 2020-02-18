@@ -35,8 +35,13 @@
       </ion-item>
     </ion-list>
     <ion-list *ngIf="!isLoading && shift">
-      <ion-item detail *ngFor="let spoj of shift?.spoje">
-        {{ spoj.from.substr(0, 5) }} {{ spoj.origin }} -> {{ spoj.destination }}
+      <ion-item *ngFor="let spoj of shift?.spoje" [detail]="!(spoj.type=='auto')">
+        <ion-text [color]="(spoj.type=='auto') ? 'dark' : 'secondary'">
+          <ion-icon name="car" *ngIf="spoj.type=='auto'"></ion-icon>
+          <ion-icon name="bus" *ngIf="spoj.type=='bus'"></ion-icon>
+          <ion-icon name="train" *ngIf="spoj.type=='vlak'"></ion-icon>
+          {{ spoj.from.substr(0, 5) }} {{ spoj.origin }} <ion-icon name="arrow-forward"></ion-icon> {{ spoj.destination }}
+        </ion-text>
       </ion-item>
     </ion-list>
   </div>
