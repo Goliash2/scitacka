@@ -35,8 +35,8 @@
       </ion-item>
     </ion-list>
     <ion-list *ngIf="!isLoading && shift">
-      <ion-item *ngFor="let spoj of shift?.spoje" [detail]="!(spoj.type=='auto')" [routerLink]="['/timetable', spoj.idSmena, spoj.id]">
-        <ion-text [color]="(spoj.type=='auto') ? 'dark' : 'primary'">
+      <ion-item *ngFor="let spoj of shift?.spoje" [detail]="(spoj.type=='bus')||(spoj.type=='train')" [routerLink]="((spoj.type=='bus')||(spoj.type=='train')) ? ['/timetable', spoj.idSmena, spoj.id] : null">
+        <ion-text [color]="(spoj.type=='bus')||(spoj.type=='train') ? 'primary' : 'dark'">
           <ion-icon name="car" *ngIf="spoj.type=='auto'"></ion-icon>
           <ion-icon name="bus" *ngIf="spoj.type=='bus'"></ion-icon>
           <ion-icon name="train" *ngIf="spoj.type=='train'"></ion-icon>
