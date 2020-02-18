@@ -38,7 +38,7 @@
         <ion-spinner></ion-spinner>
       </ion-item>
     </ion-list>
-    <ion-list *ngIf="(!userStatus && !isLoading)||(user.smeny.length===0 && !isLoading)">
+    <ion-list *ngIf="(!userStatus && !isLoading)||(user?.smeny.length===0 && !isLoading)">
       <ion-item>
         Nenašli jsme k vám přiřazené žádné směny.
       </ion-item>
