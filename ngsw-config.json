@@ -1,16 +1,16 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
-  "index": "/index.html",
+  "index": "/scitacka/index.html",
   "assetGroups": [
     {
       "name": "Scitacka",
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/favicon.ico",
-          "/index.html",
-          "/*.css",
-          "/*.js"
+          "/scitacka/favicon.ico",
+          "/scitacka/index.html",
+          "/scitacka/*.css",
+          "/scitacka/*.js"
         ]
       }
     }, {
@@ -19,8 +19,8 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/**",
-          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+          "/scitacka/assets/**",
+          "/scitacka/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
     }

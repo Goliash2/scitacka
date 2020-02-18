@@ -38,16 +38,16 @@ export class TimetablePage implements OnInit, OnDestroy {
   private timetableSub: Subscription;
 
   @ViewChild('slider', { read: IonSlides, static: false }) slider: IonSlides;
-  private boardedPlus() {
+  boardedPlus() {
     this.boarding[this.currentStopKey]++;
   }
-  private boardedMinus() {
+  boardedMinus() {
     this.boarding[this.currentStopKey]--;
   }
-  private alightPlus() {
+  alightPlus() {
     this.alight[this.currentStopKey]++;
   }
-  private alightMinus() {
+  alightMinus() {
     this.alight[this.currentStopKey]--;
   }
 
