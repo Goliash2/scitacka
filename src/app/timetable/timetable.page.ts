@@ -7,12 +7,14 @@ import {ShiftService} from '../survey/shift.service';
 import {Shift} from '../survey/shift.model';
 
 interface BusData {
+  error: string;
   linka: any;
   dopravce: any;
   spoj: any;
   zastavky: any[];
 }
 interface TrainData {
+  error: string;
   spoj: any;
   zastavky: any[];
 }

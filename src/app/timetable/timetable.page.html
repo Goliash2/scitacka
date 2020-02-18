@@ -18,7 +18,12 @@
       <ion-row *ngIf="!timetableBus && !timetableTrain && !isLoading">
         <ion-col class="ion-text-center">Zadané spojení nebylo nalezeno.</ion-col>
       </ion-row>
-      <ion-row *ngIf="(timetableBus || timetableTrain) && !isLoading">
+      <ion-row *ngIf="(timetableBus && timetableBus.error || timetableTrain && timetableTrain.error) && !isLoading">
+        <ion-col
+                class="ion-text-center">{{ timetableTrain ? timetableTrain.error : timetableBus.error}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="(timetableBus && !(timetableBus.error) || timetableTrain && !(timetableTrain.error)) && !isLoading">
         <ion-col
                 class="ion-text-center">{{ timetableTrain ? timetableTrain.spoj.company : timetableBus.linka.cislo + ' ' + timetableBus.linka.nazev}}
         </ion-col>
@@ -30,7 +35,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div class="stats" *ngIf="timetableBus || timetableTrain">
+  <div class="stats" *ngIf="timetableBus && !(timetableBus.error) || timetableTrain && !(timetableTrain.error)">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -39,7 +44,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div class="controls" *ngIf="timetableBus || timetableTrain">
+  <div class="controls" *ngIf="timetableBus && !(timetableBus.error) || timetableTrain && !(timetableTrain.error)">
     <ion-slides #slider (ionSlideDidChange)="refreshSlideKey()">
       <ion-slide *ngFor="let stop of (timetableTrain ? timetableTrain?.zastavky : timetableBus?.zastavky) | keyvalue: noSort">
         <ion-grid>

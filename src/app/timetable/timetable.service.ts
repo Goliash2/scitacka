@@ -6,12 +6,14 @@ import {HttpClient} from '@angular/common/http';
 import {Timetable} from './timetable.model';
 
 interface BusData {
+    error: string;
     linka: any;
     dopravce: any;
     spoj: any;
     zastavky: any[];
 }
 interface TrainData {
+    error: string;
     spoj: any;
     zastavky: any[];
 }
