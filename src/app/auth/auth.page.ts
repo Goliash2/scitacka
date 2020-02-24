@@ -3,6 +3,8 @@ import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {LoadingController} from '@ionic/angular';
 import {NgForm} from '@angular/forms';
+// @ts-ignore
+import PouchDB from 'pouchdb-browser';
 
 @Component({
   selector: 'app-auth',
@@ -12,10 +14,18 @@ import {NgForm} from '@angular/forms';
 export class AuthPage implements OnInit {
   isLoading = false;
   isLogin = true;
+  userDb = new PouchDB('user');
 
   constructor(private authService: AuthService, private router: Router, private loadingController: LoadingController) { }
 
   ngOnInit() {
+      this.userDb.get('_local/activeuser').then(res => {
+          if ((res as any).email) {
+              this.onLogin((res as any).email);
+          }
+      }).catch(() => {
+          console.log('Nenalezen aktivni uzivatel - prihlaste se.');
+      });
   }
 
   onLogin(email) {

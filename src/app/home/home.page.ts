@@ -4,6 +4,12 @@ import {ZXingScannerComponent} from '@zxing/ngx-scanner';
 import {UserService} from '../user.service';
 import {User} from '../user.model';
 import {Subscription} from 'rxjs';
+// @ts-ignore
+import PouchDB from 'pouchdb-browser';
+// @ts-ignore
+import PouchDBFind from 'pouchdb-find';
+import {AuthService} from '../auth/auth.service';
+PouchDB.plugin(PouchDBFind);
 
 @Component({
   selector: 'app-home',
@@ -18,6 +24,8 @@ export class HomePage implements OnInit, OnDestroy {
   userStatus = false;
   userSub: Subscription;
   isLoading = false;
+  userDb = new PouchDB('user');
+  userEmail = this.authService.userId;
 
   @ViewChild('scanner', { static: false })
   scanner: ZXingScannerComponent;
@@ -47,20 +55,45 @@ export class HomePage implements OnInit, OnDestroy {
     this.scannerActive = !this.scannerActive;
   }
 
-  constructor( private userService: UserService) {}
+  constructor( private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.userSub = this.userService.getUser().subscribe(user => {
-      if (user === 'Unknown user') {
-        console.log('User not found');
-        this.isLoading = false;
-      } else {
-        this.user = user;
-        console.log(user);
-        this.userStatus = true;
-        this.isLoading = false;
-      }
+    this.userDb.createIndex({
+      index: {fields: ['email']}
+    }).then(() => {
+      this.userDb.find({
+        selector: {
+          email: {$eq: this.userEmail}
+        }
+      }).then(user => {
+        if (user.docs.length > 0) {
+          this.user = this.userService.userFromObjectDb(user.docs[0]);
+          this.userStatus = true;
+          this.isLoading = false;
+        } else {
+          this.userSub = this.userService.getUser().subscribe(userReq => {
+            if (userReq === 'Unknown user') {
+              console.log('User not found');
+              this.isLoading = false;
+            } else {
+              this.user = userReq;
+              this.insertUserDb(userReq);
+              console.log(userReq);
+              this.userStatus = true;
+              this.isLoading = false;
+            }
+          });
+        }
+      });
+    });
+  }
+
+  insertUserDb(user) {
+    this.userDb.post(user).then(() => {
+      console.log('Document inserted OK');
+    }).catch((err) => {
+      console.error(err);
     });
   }
 

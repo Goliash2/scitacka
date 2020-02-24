@@ -13,7 +13,7 @@ interface UserData {
   name: string;
   surname: string;
   suffix: string;
-  email: number;
+  email: string;
   phone: string;
   comment: string;
   smeny: any[];
@@ -42,35 +42,68 @@ export class UserService {
               if (userData.error) {
                 return 'Unknown user';
               } else {
-                this.innerSmeny = [];
-                for (const smena of userData.smeny) {
-                  this.innerSmeny.push(new UserShifts(
-                      smena.id,
-                      smena.id_smena,
-                      smena.id_scitac,
-                      smena.date,
-                      smena.comment,
-                      smena.id_pruzkum,
-                      smena.name,
-                      smena.type,
-                      smena.origin,
-                      smena.from
-                      )
-                  );
-                }
-                return new User(
-                    userData.id,
-                    userData.prefix,
-                    userData.name,
-                    userData.surname,
-                    userData.suffix,
-                    userData.email,
-                    userData.phone,
-                    userData.comment,
-                    this.innerSmeny
-                );
+                return this.userFromObjectJSON(userData);
               }
             })
         );
+  }
+
+  userFromObjectJSON(userData) {
+    this.innerSmeny = [];
+    for (const smena of userData.smeny) {
+      this.innerSmeny.push(new UserShifts(
+          smena.id,
+          smena.id_smena,
+          smena.id_scitac,
+          smena.date,
+          smena.comment,
+          smena.id_pruzkum,
+          smena.name,
+          smena.type,
+          smena.origin,
+          smena.from
+          )
+      );
+    }
+    return new User(
+        userData.id,
+        userData.prefix,
+        userData.name,
+        userData.surname,
+        userData.suffix,
+        userData.email,
+        userData.phone,
+        userData.comment,
+        this.innerSmeny
+    );
+  }
+  userFromObjectDb(userData) {
+    this.innerSmeny = [];
+    for (const smena of userData.smeny) {
+      this.innerSmeny.push(new UserShifts(
+          smena.id,
+          smena.idSmena,
+          smena.idScitac,
+          smena.date,
+          smena.comment,
+          smena.idPruzkum,
+          smena.name,
+          smena.type,
+          smena.origin,
+          smena.from
+          )
+      );
+    }
+    return new User(
+        userData.id,
+        userData.prefix,
+        userData.name,
+        userData.surname,
+        userData.suffix,
+        userData.email,
+        userData.phone,
+        userData.comment,
+        this.innerSmeny
+    );
   }
 }

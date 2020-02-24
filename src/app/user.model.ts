@@ -7,7 +7,7 @@ export class User {
         public name: string,
         public surname: string,
         public suffix: string,
-        public email: number,
+        public email: string,
         public phone: string,
         public comment: string,
         public smeny: UserShifts[]

@@ -88,4 +88,50 @@ export class ShiftService {
             })
         );
   }
+
+  shiftFromObjectDb(shiftData) {
+    this.innerConnection = [];
+    for (const spoj of shiftData.spoje) {
+      this.innerConnection.push(new Connection(
+          spoj.id,
+          spoj.idSmena,
+          spoj.order,
+          spoj.type,
+          spoj.line,
+          spoj.connectionId,
+          spoj.origin,
+          spoj.destination,
+          spoj.from,
+          spoj.till,
+          spoj.comment
+          )
+      );
+    }
+    this.innerWorker = [];
+    for (const scitac of shiftData.scitaci) {
+      this.innerWorker.push(new Worker(
+          scitac.id,
+          scitac.idSmena,
+          scitac.idScitac,
+          scitac.date,
+          scitac.comment,
+          scitac.prefix,
+          scitac.name,
+          scitac.surname,
+          scitac.suffix,
+          scitac.email,
+          scitac.phone
+          )
+      );
+    }
+    return new Shift(
+        shiftData.id,
+        shiftData.idPruzkum,
+        shiftData.name,
+        shiftData.type,
+        shiftData.comment,
+        this.innerConnection,
+        this.innerWorker
+    );
+  }
 }
